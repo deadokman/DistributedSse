@@ -9,18 +9,28 @@
 
 using Distributed.MessagePipe.Interface;
 using Microsoft.AspNetCore.Http;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Distributed.MessagePipe.Implementation;
 
 /// <summary>
 /// async response
 /// </summary>
-public class AsyncStreamHelper : IAsyncStreamHelper
+public class AsyncStreamHelper<T> : IAsyncStreamHelper<T>
+    where T : class
 {
     private readonly IAsyncMessagePipe<T> _pipe;
 
-    public async Task BeginResponseAsync<T>(
-        HttpResponse response)
+    public AsyncStreamHelper(IAsyncMessagePipe<T> pipe)
+    {
+        _pipe = pipe ?? throw new ArgumentNullException(nameof(pipe));
+    }
+
+    public async Task WriteToResponse(
+                HttpResponse response,
+        string reciver,
+        CancellationToken cancellationToken)
     {
         response.Headers.Add("Content-Type", "text/event-stream");
         await response.Body.FlushAsync();
@@ -29,11 +39,21 @@ public class AsyncStreamHelper : IAsyncStreamHelper
         {
             while (true)
             {
-                var msgs = await _pipe.WaitForMessagesAsync(reciver, cancellationToken);
+                var msgs = await _pipe.WaitForMessagesAsync(reciver, cancellationToken)
+                    .ContinueWith(e =>
+                    {
+                        if (e.IsFaulted)
+                        {
+                            throw e.Exception;
+                        }
+
+                        return e.Result;
+                    });
                 foreach (var msg in msgs)
                 {
+                    var msgBody = JsonSerializer.Serialize(msg);
                     await response
-                        .WriteAsync($"data: {msg}\r\r");
+                        .WriteAsync($"data: {msgBody}\r\r");
                 }
             }
         }
@@ -43,12 +63,13 @@ public class AsyncStreamHelper : IAsyncStreamHelper
         }
         catch (Exception ex)
         {
-            await response.WriteAsync(ex.ToString());
+            await response.WriteAsync($"data: {ex.Message}\r\r");
             response.StatusCode = 500;
         }
     }
-}
 
-public interface IAsyncStreamHelper
-{
+    public async Task SendAsync(string reciver, T message)
+    {
+        await _pipe.SendAsync(reciver, message);
+    }
 }

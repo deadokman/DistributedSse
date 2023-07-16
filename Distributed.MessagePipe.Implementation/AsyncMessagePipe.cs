@@ -19,7 +19,7 @@ namespace Distributed.MessagePipe.Implementation;
 /// Implementation for async message pipe
 /// </summary>
 /// <typeparam name="T">Message type</typeparam>
-public class AsyncMessagePipe<T> : IAsyncMessagePipe<T>
+internal class AsyncMessagePipe<T> : IAsyncMessagePipe<T>
     where T : class
 {
     private ConcurrentDictionary<string, AsyncTaskPack<T>> _messagePipeHolder;
@@ -33,7 +33,7 @@ public class AsyncMessagePipe<T> : IAsyncMessagePipe<T>
     }
 
     /// <inheritdoc/>
-    public async Task Send(string receiver, T message)
+    public async Task SendAsync(string receiver, T message)
     {
         if (_messagePipeHolder.TryGetValue(receiver, out var pack))
         {
@@ -76,5 +76,11 @@ public class AsyncMessagePipe<T> : IAsyncMessagePipe<T>
         }
 
         return Task.CompletedTask;
+    }
+
+
+    public void Dispose()
+    {
+        _messagePipeHolder.Clear();
     }
 }

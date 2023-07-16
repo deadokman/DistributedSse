@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
@@ -10,7 +10,11 @@
     <ItemGroup>
         <PackageReference Include="M6T.Core.TupleModelBinder" Version="1.4.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0-preview.6.23329.7" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0-preview.6.23329.7" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0-preview.6.23329.7" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0-preview.6.23329.7" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -22,6 +26,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Distributed.MessagePipe.Implementation\Distributed.MessagePipe.Implementation.csproj" />
       <ProjectReference Include="..\Distributed.MessagePipe.Interface\Distributed.MessagePipe.Interface.csproj" />
+      <ProjectReference Include="..\Distributed.MessagePipe.Redis.SharedStore\Distributed.MessagePipe.Redis.SharedStore.csproj" />
     </ItemGroup>
 
 </Project>

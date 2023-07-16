@@ -15,7 +15,7 @@ namespace Distributed.MessagePipe.Interface;
 /// Async message pipe interface
 /// </summary>
 /// <typeparam name="T">Message type</typeparam>
-public interface IAsyncMessagePipe<T>
+public interface IAsyncMessagePipe<T> : IDisposable
     where T : class
 {
     /// <summary>
@@ -24,7 +24,7 @@ public interface IAsyncMessagePipe<T>
     /// <param name="receiver">Reciver name</param>
     /// <param name="message">Message</param>
     /// <returns>Async receiver registration</returns>
-    Task Send(string receiver, T message);
+    Task SendAsync(string receiver, T message);
 
     /// <summary>
     /// Wait for message event

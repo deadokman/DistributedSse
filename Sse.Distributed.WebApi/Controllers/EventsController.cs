@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using Distributed.MessagePipe.Interface;
+using Distributed.MessagePipe.Implementation;
 
 namespace Sse.Distributed.WebApi.Controllers;
 
@@ -9,22 +10,22 @@ namespace Sse.Distributed.WebApi.Controllers;
 [Route("/api/sse")]
 public class EventsController : ControllerBase
 {
-    private IAsyncMessagePipe<string> _pipe;
+    private IAsyncStreamHelper<MyTestMessage> _asyncStreamHelper;
 
-    public EventsController(IAsyncMessagePipe<string> pipe)
+    public EventsController(IAsyncStreamHelper<MyTestMessage> pipe)
     {
-        _pipe = pipe ?? throw new ArgumentNullException(nameof(pipe));
+        _asyncStreamHelper = pipe ?? throw new ArgumentNullException(nameof(pipe));
     }
 
     [HttpGet("subscribe")]
-    public async Task Get(CancellationToken cancellationToken, [FromQuery] string reciver)
+    public async Task Get(CancellationToken cancellationToken, [FromQuery] string receiver)
     {
-       
+        await _asyncStreamHelper.WriteToResponse(Response, receiver, cancellationToken);
     }
 
     [HttpPost("send")]
-    public async Task Get([FromBody] (string reciver, string message) req)
+    public async Task Send([FromBody] (string reciver, MyTestMessage message) req)
     {
-        await _pipe.Send(req.reciver, req.message);
+        await _asyncStreamHelper.SendAsync(req.reciver, req.message);
     }
 }
