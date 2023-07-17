@@ -56,7 +56,7 @@ internal class AsyncMessagePipe<T> : IAsyncMessagePipe<T>
                 pack = _messagePipeHolder[receiver];
             }
         }
-        
+
         var resp = await pack.Tcs.Task.ContinueWith(
             _ =>
             {
