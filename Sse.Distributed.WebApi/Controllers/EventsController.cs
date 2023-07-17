@@ -24,8 +24,8 @@ public class EventsController : ControllerBase
     }
 
     [HttpPost("send")]
-    public async Task Send([FromBody] (string reciver, MyTestMessage message) req)
+    public async Task Send([FromBody] (string receiver, MyTestMessage message) req)
     {
-        await _asyncStreamHelper.SendAsync(req.reciver, req.message);
+        await _asyncStreamHelper.SendAsync(req.receiver, req.message);
     }
 }

@@ -9,7 +9,6 @@
 
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
-using System.Xml;
 using Distributed.MessagePipe.Implementation.Contracts;
 using Distributed.MessagePipe.Interface;
 
