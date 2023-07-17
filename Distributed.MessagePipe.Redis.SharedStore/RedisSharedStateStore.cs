@@ -10,12 +10,9 @@
 using Distributed.MessagePipe.Interface;
 using Distributed.MessagePipe.Redis.SharedStore;
 using Microsoft.Extensions.Options;
-using Microsoft.VisualBasic.FileIO;
 using StackExchange.Redis;
 using System.Collections.Concurrent;
 using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
 
 namespace Distributed.MessagePipe.Implementation;
 
@@ -24,8 +21,6 @@ namespace Distributed.MessagePipe.Implementation;
 /// </summary>
 public class RedisSharedStateStore : ISharedStateStore
 {
-    private const string RECEIVER_CONST_PROP = "$DM_PIPE_RECEIVER";
-
     private readonly IOptions<RedisSharedStoreOptions> _options;
     private readonly ConcurrentDictionary<(Type, Guid), string> _channelCache;
 
