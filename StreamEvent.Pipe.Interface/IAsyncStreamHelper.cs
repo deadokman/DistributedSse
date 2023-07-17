@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Distributed.MessagePipe.Interface
+namespace StreamEvent.Pipe.Interface
 {
     public interface IAsyncStreamHelper<T>
       where T : class

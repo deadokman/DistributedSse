@@ -5,13 +5,15 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sse.Distributed.WebApi", "Sse.Distributed.WebApi\Sse.Distributed.WebApi.csproj", "{C3A15C1C-60AF-41AE-828B-2BA6BC86EA4A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Distributed.MessagePipe.Interface", "Distributed.MessagePipe.Interface\Distributed.MessagePipe.Interface.csproj", "{6F638096-A201-497F-A4D3-B946350D7201}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamEvent.Pipe.Interface", "StreamEvent.Pipe.Interface\StreamEvent.Pipe.Interface.csproj", "{6F638096-A201-497F-A4D3-B946350D7201}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Distributed.MessagePipe.Implementation", "Distributed.MessagePipe.Implementation\Distributed.MessagePipe.Implementation.csproj", "{5428C390-26E2-40D7-83B5-F35F7A779819}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamEvent.Pipe.Implementation", "StreamEvent.Pipe.Implementation\StreamEvent.Pipe.Implementation.csproj", "{5428C390-26E2-40D7-83B5-F35F7A779819}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestUtils", "TestUtils", "{12CB5FA8-31A3-4EDD-8AF2-E1A63D0D179A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Distributed.MessagePipe.Redis.SharedStore", "Distributed.MessagePipe.Redis.SharedStore\Distributed.MessagePipe.Redis.SharedStore.csproj", "{213BCA0F-BEC7-4066-A24D-233F3CC1D98E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamEvent.SharedStore.Redis", "StreamEvent.SharedStore.Redis\StreamEvent.SharedStore.Redis.csproj", "{213BCA0F-BEC7-4066-A24D-233F3CC1D98E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{60A07C58-DCDE-4F0F-A6DD-2D96978E13ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,5 +43,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A4F66D4-52ED-4308-939B-5DCF9F5B5C35}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C3A15C1C-60AF-41AE-828B-2BA6BC86EA4A} = {60A07C58-DCDE-4F0F-A6DD-2D96978E13ED}
 	EndGlobalSection
 EndGlobal

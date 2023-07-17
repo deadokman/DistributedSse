@@ -1,12 +1,7 @@
-﻿using Distributed.MessagePipe.Interface;
-using StackExchange.Redis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using StackExchange.Redis;
+using StreamEvent.Pipe.Interface;
 
-namespace Distributed.MessagePipe.Redis.SharedStore
+namespace StreamEvent.SharedStore.Redis
 {
     /// <summary>
     /// Shared state subscription

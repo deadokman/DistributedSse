@@ -7,9 +7,7 @@
 //  Async message pipe interface
 // </summary>
 
-using Microsoft.Extensions.Hosting;
-
-namespace Distributed.MessagePipe.Interface;
+namespace StreamEvent.Pipe.Interface;
 
 /// <summary>
 /// Shared state holder

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Distributed.MessagePipe.Interface
+﻿namespace StreamEvent.Pipe.Interface
 {
     /// <summary>
     /// Part of observer pattern for new messages income

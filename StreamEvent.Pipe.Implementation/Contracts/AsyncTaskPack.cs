@@ -12,7 +12,7 @@ using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Distributed.MessagePipe.Implementation.Contracts;
+namespace StreamEvent.Pipe.Implementation.Contracts;
 
 /// <summary>
 /// Contains task completion source
@@ -86,7 +86,7 @@ public class AsyncTaskPack<TMessage>
     }
 
     /// <summary>
-    /// Инициализирует новый экземпляр класса <see cref="AsyncTaskPack{T}"/>.
+    /// РРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ РЅРѕРІС‹Р№ СЌРєР·РµРјРїР»СЏСЂ РєР»Р°СЃСЃР° <see cref="AsyncTaskPack{T}"/>.
     /// </summary>
     /// <param name="tcs">Task completion source</param>
     /// <param name="ct">Cancellation token</param>

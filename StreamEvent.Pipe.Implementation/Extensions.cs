@@ -7,11 +7,11 @@
 // Message pipe extensions
 // </summary>
 
-using Distributed.MessagePipe.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using StreamEvent.Pipe.Interface;
 
-namespace Distributed.MessagePipe.Implementation
+namespace StreamEvent.Pipe.Implementation
 {
     /// <summary>
     /// Message pipe extensions

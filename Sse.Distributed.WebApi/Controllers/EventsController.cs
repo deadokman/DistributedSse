@@ -1,8 +1,7 @@
 using System.Collections.Concurrent;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
-using Distributed.MessagePipe.Interface;
-using Distributed.MessagePipe.Implementation;
+using StreamEvent.Pipe.Interface;
 
 namespace Sse.Distributed.WebApi.Controllers;
 

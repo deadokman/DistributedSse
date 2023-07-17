@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Distributed.MessagePipe.Redis.SharedStore
+﻿namespace StreamEvent.SharedStore.Redis
 {
     /// <summary>
     /// Redis message wrap for payload

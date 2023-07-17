@@ -8,11 +8,10 @@
 // </summary>
 
 using System.Collections.Concurrent;
-using System.Collections.ObjectModel;
-using Distributed.MessagePipe.Implementation.Contracts;
-using Distributed.MessagePipe.Interface;
+using StreamEvent.Pipe.Implementation.Contracts;
+using StreamEvent.Pipe.Interface;
 
-namespace Distributed.MessagePipe.Implementation;
+namespace StreamEvent.Pipe.Implementation;
 
 /// <summary>
 /// Implementation for async message pipe

@@ -1,11 +1,10 @@
-using Distributed.MessagePipe.Implementation;
-using Distributed.MessagePipe.Interface;
-using Distributed.MessagePipe.Redis.SharedStore;
 using M6T.Core.TupleModelBinder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Sse.Distributed.WebApi;
+using StreamEvent.Pipe.Implementation;
+using StreamEvent.SharedStore.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 

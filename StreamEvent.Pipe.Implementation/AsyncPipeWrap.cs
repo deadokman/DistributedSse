@@ -8,10 +8,10 @@
 // For shared state store
 // </summary>
 
-using Distributed.MessagePipe.Interface;
 using Microsoft.Extensions.Logging;
+using StreamEvent.Pipe.Interface;
 
-namespace Distributed.MessagePipe.Implementation
+namespace StreamEvent.Pipe.Implementation
 {
     /// <summary>
     /// Wraps pipe implementations with logging and pub/sub notification

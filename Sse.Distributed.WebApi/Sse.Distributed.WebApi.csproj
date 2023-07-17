@@ -24,9 +24,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Distributed.MessagePipe.Implementation\Distributed.MessagePipe.Implementation.csproj" />
-      <ProjectReference Include="..\Distributed.MessagePipe.Interface\Distributed.MessagePipe.Interface.csproj" />
-      <ProjectReference Include="..\Distributed.MessagePipe.Redis.SharedStore\Distributed.MessagePipe.Redis.SharedStore.csproj" />
+      <ProjectReference Include="..\StreamEvent.Pipe.Implementation\StreamEvent.Pipe.Implementation.csproj" />
+      <ProjectReference Include="..\StreamEvent.Pipe.Interface\StreamEvent.Pipe.Interface.csproj" />
+      <ProjectReference Include="..\StreamEvent.SharedStore.Redis\StreamEvent.SharedStore.Redis.csproj" />
     </ItemGroup>
 
 </Project>

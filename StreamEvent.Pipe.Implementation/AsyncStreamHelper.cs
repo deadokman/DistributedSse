@@ -8,10 +8,10 @@
 // </summary>
 
 using System.Text.Json;
-using Distributed.MessagePipe.Interface;
 using Microsoft.AspNetCore.Http;
+using StreamEvent.Pipe.Interface;
 
-namespace Distributed.MessagePipe.Implementation;
+namespace StreamEvent.Pipe.Implementation;
 
 /// <summary>
 /// async response
@@ -23,7 +23,7 @@ public class AsyncStreamHelper<TMessage> : IAsyncStreamHelper<TMessage>
     private readonly IAsyncMessagePipe<TMessage> _pipe;
 
     /// <summary>
-    /// Инициализирует новый экземпляр класса <see cref="AsyncStreamHelper{T}"/>.
+    /// РРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ РЅРѕРІС‹Р№ СЌРєР·РµРјРїР»СЏСЂ РєР»Р°СЃСЃР° <see cref="AsyncStreamHelper{T}"/>.
     /// </summary>
     /// <param name="pipe">Pipe</param>
     public AsyncStreamHelper(IAsyncMessagePipe<TMessage> pipe)

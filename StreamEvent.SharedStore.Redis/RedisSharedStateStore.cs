@@ -7,14 +7,13 @@
 //  Async message pipe interface
 // </summary>
 
-using Distributed.MessagePipe.Interface;
-using Distributed.MessagePipe.Redis.SharedStore;
-using Microsoft.Extensions.Options;
-using StackExchange.Redis;
 using System.Collections.Concurrent;
 using System.Text.Json;
+using Microsoft.Extensions.Options;
+using StackExchange.Redis;
+using StreamEvent.Pipe.Interface;
 
-namespace Distributed.MessagePipe.Implementation;
+namespace StreamEvent.SharedStore.Redis;
 
 /// <summary>
 /// Messages shared state holder

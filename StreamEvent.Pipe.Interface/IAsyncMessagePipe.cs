@@ -7,7 +7,7 @@
 //  Async message pipe interface
 // </summary>
 
-namespace Distributed.MessagePipe.Interface;
+namespace StreamEvent.Pipe.Interface;
 
 /// <summary>
 /// Async message pipe interface
@@ -19,7 +19,8 @@ public interface IAsyncMessagePipe<T> : IDisposable
     /// <summary>
     /// Register message receiver
     /// </summary>
-    /// <param name="receiver">Reciver name</param>
+    /// <param name="receiver">Receiver name, non-unique "message box name"
+    /// (e.g. client unique token, id etc.) </param>
     /// <param name="message">Message</param>
     /// <returns>Async receiver registration</returns>
     Task SendAsync(string receiver, T message);

@@ -7,9 +7,9 @@
 //  Message pipe factory
 // </summary>
 
-using Distributed.MessagePipe.Interface;
+using StreamEvent.Pipe.Interface;
 
-namespace Distributed.MessagePipe.Implementation
+namespace StreamEvent.Pipe.Implementation
 {
     /// <summary>
     /// Message pipe factory

@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Distributed.MessagePipe.Interface\Distributed.MessagePipe.Interface.csproj" />
+    <ProjectReference Include="..\StreamEvent.Pipe.Interface\StreamEvent.Pipe.Interface.csproj" />
   </ItemGroup>
 
 </Project>

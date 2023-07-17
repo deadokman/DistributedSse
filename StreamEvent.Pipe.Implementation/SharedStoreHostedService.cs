@@ -7,11 +7,11 @@
 //  Hosted service for shared store runtime sync
 // </summary>
 
-using Distributed.MessagePipe.Interface;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using StreamEvent.Pipe.Interface;
 
-namespace Distributed.MessagePipe.Implementation
+namespace StreamEvent.Pipe.Implementation
 {
     /// <summary>
     /// Shared store hosted service
