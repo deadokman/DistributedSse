@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BiDepthByPlanController.cs" company="StepanovNO">
+// <copyright file="AsyncMessagePipe.cs" company="StepanovNO">
 // Copyright (c) StepanovNO. Ufa, 2023.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -49,18 +49,21 @@ internal class AsyncMessagePipe<T> : IAsyncMessagePipe<T>
     {
         if (!_messagePipeHolder.TryGetValue(receiver, out var pack))
         {
-            if (!_messagePipeHolder.TryAdd(receiver, pack = new AsyncTaskPack<T>(new TaskCompletionSource(), cancellationToken)))
+            if (!_messagePipeHolder.TryAdd(
+                    receiver,
+                    pack = new AsyncTaskPack<T>(new TaskCompletionSource(), cancellationToken)))
             {
                 pack = _messagePipeHolder[receiver];
             }
         }
-
-        var resp = await pack.Tcs.Task.ContinueWith(_ =>
-        {
-            var msgs = new ReadOnlyCollection<T>(pack.Messages.ToList());
-            pack.Messages.Clear();
-            return msgs;
-        }, cancellationToken);
+        
+        var resp = await pack.Tcs.Task.ContinueWith(
+            _ =>
+            {
+                var msgs = new ReadOnlyCollection<T>(pack.Messages.ToList());
+                pack.Messages.Clear();
+                return msgs;
+            }, cancellationToken)
 
         return resp;
     }
