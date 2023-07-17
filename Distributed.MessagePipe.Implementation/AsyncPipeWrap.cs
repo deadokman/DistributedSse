@@ -26,6 +26,14 @@ namespace Distributed.MessagePipe.Implementation
         private readonly IAsyncMessagePipeFactory _factory;
         private readonly ISharedStateStore _sharedStateHolder;
         private readonly ILogger _logger;
+        
+        /// <inheritdoc/>
+        public Type Type => typeof(TMessage);
+        
+        /// <summary>
+        /// Observer unique ID
+        /// </summary>
+        public Guid ObserverUUID { get; private set; }
 
         public AsyncPipeWrap(
             IAsyncMessagePipeFactory factory,
@@ -38,19 +46,11 @@ namespace Distributed.MessagePipe.Implementation
             _wrappedPipe = factory.Create<TMessage>();
             ObserverUUID = Guid.NewGuid();
         }
-
-        /// <inheritdoc/>
-        public Type Type => typeof(TMessage);
-
-
-        /// <summary>
-        /// Observer unique ID
-        /// </summary>
-        public Guid ObserverUUID { get; private set; }
-
         public async Task DisconnectAsync(string receiver)
         {
-            _logger.LogInformation($"Receiver [{receiver}] disconecting");
+            _logger.LogInformation("Receiver [{Receiver}] disconecting UUID [{ObserverUuid}]", 
+                receiver,
+                ObserverUUID);
             await _wrappedPipe.DisconnectAsync(receiver);
         }
 
@@ -58,7 +58,7 @@ namespace Distributed.MessagePipe.Implementation
         public void Dispose()
         {
             _factory.Utilize(_wrappedPipe);
-            _sharedStateHolder.Unsubscribe(this, subscription);
+            _sharedStateHolder.Unsubscribe(this);
             _wrappedPipe.Dispose();
         }
 
@@ -71,7 +71,11 @@ namespace Distributed.MessagePipe.Implementation
             }
             else
             {
-                _logger.LogWarning($"Unsupported messsage type {message?.GetType()} for receiver [{receiver}]");
+                _logger.LogWarning(
+                    "Unsupported messsage type {Type} for receiver [{Receiver}] UUID [{ObserverUUID}]", 
+                    message?.GetType(), 
+                    receiver,
+                    ObserverUUID);
             }
 ;
         }
@@ -79,7 +83,7 @@ namespace Distributed.MessagePipe.Implementation
         /// <inheritdoc/>
         public async Task SendAsync(string receiver, TMessage message)
         {
-            _logger.LogDebug($"Sending message to receiver [{receiver}]");
+            _logger.LogDebug("Sending message to receiver [{Receiver}] UUID [{ObserverUUID}", receiver, this.ObserverUUID);
             await _sharedStateHolder.NotifyNewMessageAsync(receiver, message);
             await _wrappedPipe.SendAsync(receiver, message);
         }
@@ -87,8 +91,7 @@ namespace Distributed.MessagePipe.Implementation
         /// <inheritdoc/>
         public async Task<ReadOnlyCollection<TMessage>> WaitForMessagesAsync(string receiver, CancellationToken cancellationToken)
         {
-            _logger.LogDebug($"Receiver [{receiver}] waits for messages");
-
+            _logger.LogDebug("Receiver [{Receiver}] waits for messages UUID [{ObserverUUID}", receiver, ObserverUUID);
             await _sharedStateHolder.AddObserverAsync<TMessage>(this);
             return await _wrappedPipe.WaitForMessagesAsync(receiver, cancellationToken);
         }

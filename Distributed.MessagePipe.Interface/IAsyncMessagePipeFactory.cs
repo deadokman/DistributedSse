@@ -1,8 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IAsyncMessagePipeFactory.cs" company="StepanovNO">
+// Copyright (c) StepanovNO. Ufa, 2023.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+// <summary>
+//  Message pipe factory
+// </summary>
 
 namespace Distributed.MessagePipe.Interface
 {
@@ -18,6 +21,13 @@ namespace Distributed.MessagePipe.Interface
         /// <returns></returns>
         IAsyncMessagePipe<T> Create<T>()
             where T : class;
-        void Utilize<T>(IAsyncMessagePipe<T> wrappedPipe) where T : class;
+        
+        /// <summary>
+        /// Utilize messag pipe
+        /// </summary>
+        /// <param name="wrappedPipe">Pipe instance</param>
+        /// <typeparam name="TMessage">Message type</typeparam>
+        void Utilize<TMessage>(IAsyncMessagePipe<TMessage> wrappedPipe) 
+            where TMessage : class;
     }
 }
