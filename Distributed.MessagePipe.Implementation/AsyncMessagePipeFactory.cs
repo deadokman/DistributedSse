@@ -16,23 +16,19 @@ namespace Distributed.MessagePipe.Implementation
     /// </summary>
     internal class AsyncMessagePipeFactory : IAsyncMessagePipeFactory
     {
-        public AsyncMessagePipeFactory(ISharedStateStore sharedStateHolder)
-        {
-        }
-
         /// <inheritdoc/>
         public IAsyncMessagePipe<TMessage> Create<TMessage>()
             where TMessage : class
         {
             var instance = Activator.CreateInstance<AsyncMessagePipe<TMessage>>();
-            // _sharedStateHolder.AddMessageObserver(instance);
-
             return instance;
         }
 
-        public void Utilize<TMessage>(IAsyncMessagePipe<TMessage> wrappedPipe) where TMessage : class
+        /// <inheritdoc/>
+        public void Utilize<TMessage>(IAsyncMessagePipe<TMessage> wrappedPipe)
+            where TMessage : class
         {
-            throw new NotImplementedException();
+            return;
         }
     }
 }

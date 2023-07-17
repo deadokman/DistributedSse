@@ -21,14 +21,14 @@ namespace Distributed.MessagePipe.Implementation;
 internal class AsyncMessagePipe<T> : IAsyncMessagePipe<T>
     where T : class
 {
-    private ConcurrentDictionary<string, AsyncTaskPack<T>> _messagePipeHolder;
+    private readonly ConcurrentDictionary<string, AsyncTaskPack<T>> _messagePipeHolder;
 
     /// <summary>
     /// Default pipe constructor
     /// </summary>
     public AsyncMessagePipe()
     {
-        _messagePipeHolder = new();
+        _messagePipeHolder = new ();
     }
 
     /// <inheritdoc/>
@@ -45,7 +45,7 @@ internal class AsyncMessagePipe<T> : IAsyncMessagePipe<T>
     }
 
     /// <inheritdoc/>
-    public async Task<ReadOnlyCollection<T>> WaitForMessagesAsync(string receiver, CancellationToken cancellationToken)
+    public async Task<IReadOnlyCollection<T>> WaitForMessagesAsync(string receiver, CancellationToken cancellationToken)
     {
         if (!_messagePipeHolder.TryGetValue(receiver, out var pack))
         {
@@ -57,13 +57,13 @@ internal class AsyncMessagePipe<T> : IAsyncMessagePipe<T>
             }
         }
 
-        var resp = await pack.Tcs.Task.ContinueWith(
+        var resp = await pack.Tcs.Task
+            .ContinueWith(
             _ =>
             {
-                var msgs = new ReadOnlyCollection<T>(pack.Messages.ToList());
-                pack.Messages.Clear();
-                return msgs;
-            }, cancellationToken)
+                return pack.GetMessages();
+            },
+            TaskScheduler.Default).ConfigureAwait(false);
 
         return resp;
     }
@@ -74,13 +74,13 @@ internal class AsyncMessagePipe<T> : IAsyncMessagePipe<T>
         if (_messagePipeHolder.TryRemove(receiver, out var pack))
         {
             pack.Tcs.TrySetCanceled();
-            pack.Messages.Clear();
+            pack.Clear();
         }
 
         return Task.CompletedTask;
     }
 
-
+    /// <inheritdoc/>
     public void Dispose()
     {
         _messagePipeHolder.Clear();

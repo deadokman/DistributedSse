@@ -10,7 +10,6 @@
 
 using Distributed.MessagePipe.Interface;
 using Microsoft.Extensions.Logging;
-using System.Collections.ObjectModel;
 
 namespace Distributed.MessagePipe.Implementation
 {
@@ -26,15 +25,21 @@ namespace Distributed.MessagePipe.Implementation
         private readonly IAsyncMessagePipeFactory _factory;
         private readonly ISharedStateStore _sharedStateHolder;
         private readonly ILogger _logger;
-        
+
         /// <inheritdoc/>
         public Type Type => typeof(TMessage);
-        
+
         /// <summary>
         /// Observer unique ID
         /// </summary>
         public Guid ObserverUUID { get; private set; }
 
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="AsyncPipeWrap{TMessage}"/>.
+        /// </summary>
+        /// <param name="factory">Message pipe factory</param>
+        /// <param name="sharedStateHolder">Shared source for messages</param>
+        /// <param name="logger">Application logger</param>
         public AsyncPipeWrap(
             IAsyncMessagePipeFactory factory,
             ISharedStateStore sharedStateHolder,
@@ -46,12 +51,15 @@ namespace Distributed.MessagePipe.Implementation
             _wrappedPipe = factory.Create<TMessage>();
             ObserverUUID = Guid.NewGuid();
         }
+
+        /// <inheritdoc/>
         public async Task DisconnectAsync(string receiver)
         {
-            _logger.LogInformation("Receiver [{Receiver}] disconecting UUID [{ObserverUuid}]", 
+            _logger.LogInformation(
+                "Receiver [{Receiver}] disconecting UUID [{ObserverUuid}]",
                 receiver,
                 ObserverUUID);
-            await _wrappedPipe.DisconnectAsync(receiver);
+            await _wrappedPipe.DisconnectAsync(receiver).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
@@ -67,33 +75,32 @@ namespace Distributed.MessagePipe.Implementation
         {
             if (message is TMessage msg)
             {
-                await _wrappedPipe.SendAsync(receiver, msg);
+                await _wrappedPipe.SendAsync(receiver, msg).ConfigureAwait(false);
             }
             else
             {
                 _logger.LogWarning(
-                    "Unsupported messsage type {Type} for receiver [{Receiver}] UUID [{ObserverUUID}]", 
-                    message?.GetType(), 
+                    "Unsupported messsage type {Type} for receiver [{Receiver}] UUID [{ObserverUUID}]",
+                    message?.GetType(),
                     receiver,
                     ObserverUUID);
             }
-;
         }
 
         /// <inheritdoc/>
         public async Task SendAsync(string receiver, TMessage message)
         {
-            _logger.LogDebug("Sending message to receiver [{Receiver}] UUID [{ObserverUUID}", receiver, this.ObserverUUID);
-            await _sharedStateHolder.NotifyNewMessageAsync(receiver, message);
-            await _wrappedPipe.SendAsync(receiver, message);
+            _logger.LogDebug("Sending message to receiver [{Receiver}] UUID [{ObserverUUID}", receiver, ObserverUUID);
+            await _sharedStateHolder.NotifyNewMessageAsync(receiver, message).ConfigureAwait(false);
+            await _wrappedPipe.SendAsync(receiver, message).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
-        public async Task<ReadOnlyCollection<TMessage>> WaitForMessagesAsync(string receiver, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<TMessage>> WaitForMessagesAsync(string receiver, CancellationToken cancellationToken)
         {
             _logger.LogDebug("Receiver [{Receiver}] waits for messages UUID [{ObserverUUID}", receiver, ObserverUUID);
-            await _sharedStateHolder.AddObserverAsync<TMessage>(this);
-            return await _wrappedPipe.WaitForMessagesAsync(receiver, cancellationToken);
+            await _sharedStateHolder.AddObserverAsync<TMessage>(this).ConfigureAwait(false);
+            return await _wrappedPipe.WaitForMessagesAsync(receiver, cancellationToken).ConfigureAwait(false);
         }
     }
 }

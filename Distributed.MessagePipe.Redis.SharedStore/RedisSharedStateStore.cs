@@ -45,6 +45,7 @@ public class RedisSharedStateStore : ISharedStateStore
             var sharedSub = new SharedSubscription();
             sharedSub.Observer = observer;
 
+            // Doublecheck is fine
             if (ObserversCollection.TryAdd(observer.Type, sharedSub))
             {
                 var channelName = CreateChannelName(observer.Type, observer.ObserverUUID);

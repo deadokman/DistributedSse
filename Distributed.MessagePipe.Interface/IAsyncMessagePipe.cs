@@ -7,8 +7,6 @@
 //  Async message pipe interface
 // </summary>
 
-using System.Collections.ObjectModel;
-
 namespace Distributed.MessagePipe.Interface;
 
 /// <summary>
@@ -32,7 +30,7 @@ public interface IAsyncMessagePipe<T> : IDisposable
     /// <param name="receiver">Receiver</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Message collection</returns>
-    Task<ReadOnlyCollection<T>> WaitForMessagesAsync(string receiver, CancellationToken cancellationToken);
+    Task<IReadOnlyCollection<T>> WaitForMessagesAsync(string receiver, CancellationToken cancellationToken);
 
     /// <summary>
     /// DisconnectAsync receiver

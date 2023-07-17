@@ -7,40 +7,46 @@
 //  async response
 // </summary>
 
+using System.Text.Json;
 using Distributed.MessagePipe.Interface;
 using Microsoft.AspNetCore.Http;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Distributed.MessagePipe.Implementation;
 
 /// <summary>
 /// async response
 /// </summary>
-public class AsyncStreamHelper<T> : IAsyncStreamHelper<T>
-    where T : class
+/// <typeparam name="TMessage">Message type</typeparam>
+public class AsyncStreamHelper<TMessage> : IAsyncStreamHelper<TMessage>
+    where TMessage : class
 {
-    private readonly IAsyncMessagePipe<T> _pipe;
+    private readonly IAsyncMessagePipe<TMessage> _pipe;
 
-    public AsyncStreamHelper(IAsyncMessagePipe<T> pipe)
+    /// <summary>
+    /// »нициализирует новый экземпл€р класса <see cref="AsyncStreamHelper{T}"/>.
+    /// </summary>
+    /// <param name="pipe">Pipe</param>
+    public AsyncStreamHelper(IAsyncMessagePipe<TMessage> pipe)
     {
         _pipe = pipe ?? throw new ArgumentNullException(nameof(pipe));
     }
 
+    /// <inheritdoc/>
     public async Task WriteToResponse(
                 HttpResponse response,
-        string reciver,
-        CancellationToken cancellationToken)
+                string reciver,
+                CancellationToken cancellationToken)
     {
         response.Headers.Add("Content-Type", "text/event-stream");
-        await response.Body.FlushAsync();
-        
+        await response.Body.FlushAsync(cancellationToken).ConfigureAwait(false);
+
         try
         {
             while (true)
             {
                 var msgs = await _pipe.WaitForMessagesAsync(reciver, cancellationToken)
-                    .ContinueWith(e =>
+                    .ContinueWith(
+                    e =>
                     {
                         if (e.IsFaulted)
                         {
@@ -48,28 +54,30 @@ public class AsyncStreamHelper<T> : IAsyncStreamHelper<T>
                         }
 
                         return e.Result;
-                    });
+                    },
+                    TaskScheduler.Default).ConfigureAwait(false);
                 foreach (var msg in msgs)
                 {
                     var msgBody = JsonSerializer.Serialize(msg);
                     await response
-                        .WriteAsync($"data: {msgBody}\r\r");
+                        .WriteAsync($"data: {msgBody}\r\r", cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
         }
         catch (TaskCanceledException)
         {
-            await _pipe.DisconnectAsync(reciver);
+            await _pipe.DisconnectAsync(reciver).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
-            await response.WriteAsync($"data: {ex.Message}\r\r");
+            await response.WriteAsync($"data: {ex.Message}\r\r", cancellationToken: cancellationToken).ConfigureAwait(false);
             response.StatusCode = 500;
         }
     }
 
-    public async Task SendAsync(string reciver, T message)
+    /// <inheritdoc/>
+    public async Task SendAsync(string reciver, TMessage message)
     {
-        await _pipe.SendAsync(reciver, message);
+        await _pipe.SendAsync(reciver, message).ConfigureAwait(false);
     }
 }
