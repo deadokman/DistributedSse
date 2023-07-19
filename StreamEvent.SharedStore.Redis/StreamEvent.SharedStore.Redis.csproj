@@ -4,6 +4,15 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>SSE .NET Core Redis shared store</Title>
+    <Authors>StepanovNO</Authors>
+    <Description>Redis shared store implementation for SSE library</Description>
+    <Copyright>(c) StepanovNO</Copyright>
+    <PackageProjectUrl>https://github.com/deadokman/EventStreamNet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/deadokman/EventStreamNet</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>SSE, ASP, NET, Redis</PackageTags>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +22,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StreamEvent.Pipe.Interface\StreamEvent.Pipe.Interface.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

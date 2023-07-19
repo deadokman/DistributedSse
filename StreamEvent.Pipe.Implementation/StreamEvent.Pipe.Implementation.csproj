@@ -5,6 +5,16 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
         <LangVersion>11</LangVersion>
+        <Title>SSE .NET Core</Title>
+        <Authors>StepanovNO</Authors>
+        <Description>SSE implementation for  ASP .NET Applications with distibuted message pipe support</Description>
+        <Copyright>(c) StepanovNO</Copyright>
+        <PackageProjectUrl>https://github.com/deadokman/EventStreamNet</PackageProjectUrl>
+        <PackageIcon>icon.png</PackageIcon>
+        <RepositoryUrl>https://github.com/deadokman/EventStreamNet</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>C#, SSE, ASP .NET</PackageTags>
+        <PackageReleaseNotes>First release</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
@@ -31,6 +41,13 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <None Update="icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
     </ItemGroup>
 
 </Project>

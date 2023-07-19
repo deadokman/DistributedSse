@@ -5,12 +5,28 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>11</LangVersion>
+        <Title>SSE .NET Core interfaces</Title>
+        <PackageIcon>icon.png</PackageIcon>
+        <Description>Iterfaces for SSE library</Description>
+        <Copyright>StepanovNO</Copyright>
+        <PackageProjectUrl>https://github.com/deadokman/EventStreamNet</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/deadokman/EventStreamNet</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>SSE, NET, ASP .NET</PackageTags>
+        <PackageReleaseNotes>Initial version</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
       <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="6.0.0-preview.4.21253.5" />
       <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
     </ItemGroup>
 
 </Project>
