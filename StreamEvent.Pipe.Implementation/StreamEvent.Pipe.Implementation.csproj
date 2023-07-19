@@ -15,6 +15,7 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>C#, SSE, ASP .NET</PackageTags>
         <PackageReleaseNotes>First release</PackageReleaseNotes>
+        <Version>1.0.0</Version>
     </PropertyGroup>
 
     <ItemGroup>
